@@ -1,16 +1,92 @@
-[gd_scene load_steps=2 format=3 uid="uid://bv1pb4q3t7hva"]
+[gd_scene load_steps=12 format=3 uid="uid://bv1pb4q3t7hva"]
+
+[ext_resource type="PackedScene" uid="uid://b8x782bn4fm41" path="res://Scene/Joueur.tscn" id="1_o6ksw"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_omppu"]
 
+[sub_resource type="Environment" id="Environment_514a0"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bye0q"]
+
+[sub_resource type="Environment" id="Environment_mk82u"]
+ambient_light_color = Color(0.301961, 0.831373, 0.788235, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_7l44d"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_bv48k"]
+noise_type = 5
+frequency = 0.0074
+offset = Vector3(-111.11, 0, 0)
+fractal_type = 3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_8lp6p"]
+in_3d_space = true
+seamless = true
+seamless_blend_skirt = 0.263
+noise = SubResource("FastNoiseLite_bv48k")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r0vpu"]
+transparency = 4
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.639216, 0.85098, 0.937255, 1)
+albedo_texture = SubResource("NoiseTexture2D_8lp6p")
+albedo_texture_msdf = true
+normal_enabled = true
+texture_repeat = false
+
+[sub_resource type="SphereMesh" id="SphereMesh_6rq6q"]
+
+[sub_resource type="MeshTexture" id="MeshTexture_3r4bj"]
+mesh = SubResource("SphereMesh_6rq6q")
+image_size = Vector2(10, 10)
+
 [node name="terrain" type="Node3D"]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="TerrainVisuel" type="MeshInstance3D" parent="."]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0.0129809, 0, 0)
 mesh = SubResource("PlaneMesh_omppu")
+
+[node name="Camera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 10)
+environment = SubResource("Environment_514a0")
+current = true
+fov = 100.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.424169, 9.70685, 0)
+visible = false
 
 [node name="LightmapGI" type="LightmapGI" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7161, -5.32503, 14.1168)
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.979226, 0, -0.20277, 0, 1, 0, 0.20277, 0, 0.979226, -0.570477, 7.89354, 4.04862)
-fov = 179.0
+[node name="Joueur" parent="." instance=ExtResource("1_o6ksw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.4731, 0)
+
+[node name="CollisionGroup" type="StaticBody3D" parent="."]
+transform = Transform3D(20, 0, 0, 0, 1, 0, 0, 0, 20, 0, 0, 0)
+
+[node name="formeCollision" type="CollisionShape3D" parent="CollisionGroup"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0129809, 0, 0)
+shape = SubResource("BoxShape3D_bye0q")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_mk82u")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="."]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 10.747, 0)
+operation = 1
+snap = 1e-06
+flip_faces = true
+mesh = SubResource("SphereMesh_7l44d")
+material = SubResource("StandardMaterial3D_r0vpu")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.747, 0)
+light_color = Color(0.831373, 1, 1, 1)
+light_energy = 10.3
+light_indirect_energy = 1.46
+light_volumetric_fog_energy = 0.698
+light_projector = SubResource("MeshTexture_3r4bj")
+light_size = 1.0
+light_specular = 0.953
+omni_range = 4096.0

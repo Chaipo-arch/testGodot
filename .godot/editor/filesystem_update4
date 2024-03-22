@@ -1,2 +1,5 @@
 res://Joueur.tscn
 res://terrain.tscn
+res://Scene/Joueur.tscn
+res://Camera.gd
+res://Scene/terrain.tscn

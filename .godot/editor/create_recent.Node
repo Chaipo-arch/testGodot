@@ -1,1 +1,9 @@
+MeshInstance3D
+OmniLight3D
+CSGMesh3D
+CSGCombiner3D
+WorldEnvironment
+StaticBody3D
+CollisionShape3D
+DirectionalLight3D
 CharacterBody3D

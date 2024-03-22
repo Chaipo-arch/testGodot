@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://ba3ho6yqkfhex"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_8lfjs"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_byc5h"]
+noise_type = 5
+frequency = 0.0074
+offset = Vector3(-111.11, 0, 0)
+fractal_type = 3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_8lp6p"]
+in_3d_space = true
+seamless = true
+seamless_blend_skirt = 0.263
+noise = SubResource("FastNoiseLite_byc5h")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o0ok1"]
+transparency = 4
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.639216, 0.85098, 0.937255, 1)
+albedo_texture = SubResource("NoiseTexture2D_8lp6p")
+albedo_texture_msdf = true
+normal_enabled = true
+texture_repeat = false
+
+[node name="CSGMesh3D" type="CSGMesh3D"]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 10.747, 0)
+operation = 1
+snap = 1e-06
+flip_faces = true
+mesh = SubResource("SphereMesh_8lfjs")
+material = SubResource("StandardMaterial3D_o0ok1")
