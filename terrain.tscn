@@ -1,6 +1,21 @@
-[gd_scene load_steps=2 format=3 uid="uid://bv1pb4q3t7hva"]
+[gd_scene load_steps=9 format=3 uid="uid://bv1pb4q3t7hva"]
+
+[ext_resource type="Script" path="res://table.gd" id="1_om0w4"]
+[ext_resource type="ArrayMesh" uid="uid://n4ex1fv0dybh" path="res://15582_Table_Tennis_Table_v2_NEW.obj" id="1_wetdm"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_omppu"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_m1lra"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_aw16h"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_lnsgs"]
+size = Vector2(4, 6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7waxg"]
+size = Vector3(6.2, 1, 0.01)
+
+[sub_resource type="Skin" id="Skin_o0kcd"]
 
 [node name="terrain" type="Node3D"]
 
@@ -8,9 +23,40 @@
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0.0129809, 0, 0)
 mesh = SubResource("PlaneMesh_omppu")
 
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.8795, 0.95368, 4.6685)
+mesh = SubResource("CapsuleMesh_m1lra")
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="MeshInstance3D2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D2/CharacterBody3D"]
+shape = SubResource("CapsuleShape3D_aw16h")
+
 [node name="LightmapGI" type="LightmapGI" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7161, -5.32503, 14.1168)
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.979226, 0, -0.20277, 0, 1, 0, 0.20277, 0, 0.979226, -0.570477, 7.89354, 4.04862)
 fov = 179.0
+
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="."]
+
+[node name="table" type="MeshInstance3D" parent="MultiMeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1, 0)
+mesh = SubResource("PlaneMesh_lnsgs")
+skeleton = NodePath("../..")
+script = ExtResource("1_om0w4")
+
+[node name="filet" type="MeshInstance3D" parent="MultiMeshInstance3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 1, 0)
+mesh = SubResource("BoxMesh_7waxg")
+skin = SubResource("Skin_o0kcd")
+
+[node name="table2" type="MeshInstance3D" parent="MultiMeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, 0)
+mesh = SubResource("PlaneMesh_lnsgs")
+script = ExtResource("1_om0w4")
+
+[node name="15582TableTennisTableV2New" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.1, 0, 0, 0, -0.00149394, 0.0999888, 0, -0.0999888, -0.00149394, -37.3097, -2.02814, 19.9481)
+mesh = ExtResource("1_wetdm")
