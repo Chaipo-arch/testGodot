@@ -1,25 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://bv1pb4q3t7hva"]
+[gd_scene load_steps=2 format=3 uid="uid://bv1pb4q3t7hva"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_omppu"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_m1lra"]
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_aw16h"]
 
 [node name="terrain" type="Node3D"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0.0129809, 0, 0)
 mesh = SubResource("PlaneMesh_omppu")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.8795, 0.95368, 4.6685)
-mesh = SubResource("CapsuleMesh_m1lra")
-
-[node name="CharacterBody3D" type="CharacterBody3D" parent="MeshInstance3D2"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D2/CharacterBody3D"]
-shape = SubResource("CapsuleShape3D_aw16h")
 
 [node name="LightmapGI" type="LightmapGI" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7161, -5.32503, 14.1168)
